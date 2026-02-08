@@ -13,4 +13,5 @@ public class CloudFlareR2Config {
     private String accountId;
     private String publicDomain;
     private String bucket;
+    private String publicBaseUrl;
 }

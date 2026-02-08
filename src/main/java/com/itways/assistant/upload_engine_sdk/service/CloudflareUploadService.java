@@ -23,15 +23,41 @@ public class CloudflareUploadService implements UploadService {
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
+            metadata.setContentType(file.getContentType());
             amazonS3.putObject(new PutObjectRequest(
                     config.getBucket(),
                     fileName,
                     file.getInputStream(),
-                    metadata).withCannedAcl(CannedAccessControlList.PublicRead));
-            String url = amazonS3.getUrl(config.getBucket(), fileName).toString();
-            return new UploadResponse(fileName, url, true, "Uploaded successfully");
+                    metadata));
+
+            // TODO return public URL - Profili site
+            String publicUrl = buildPublicUrl(fileName);
+
+            return new UploadResponse(
+                    fileName,
+                    publicUrl,
+                    true,
+                    "Uploaded successfully");
         } catch (Exception e) {
-            return new UploadResponse(fileName, null, false, "Upload failed: " + e.getMessage());
+            return new UploadResponse(
+                    fileName,
+                    null,
+                    false,
+                    "Upload failed: " + e.getMessage());
         }
+    }
+
+    private String buildPublicUrl(String fileName) {
+        // Prefer publicBaseUrl if present, fallback to publicDomain
+        if(config.getPublicBaseUrl() != null && !config.getPublicBaseUrl().isBlank()){
+            return config.getPublicBaseUrl() + "/" + fileName;
+        }
+        if(config.getPublicDomain() != null && !config.getPublicDomain().isBlank()){
+            return "https://" + config.getPublicDomain() + "/" + fileName;
+        }
+
+        throw new IllegalArgumentException(
+                "No publicBaseUrl or publicDomain configured for Cloudflare R2"
+        );
     }
 }
