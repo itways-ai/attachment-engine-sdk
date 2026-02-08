@@ -35,20 +35,6 @@ Add the dependency to your `pom.xml`:
 
 Add the `@EnableUpload` annotation to your Spring Boot application:
 
-```java
-import com.itways.assistant.upload_engine_sdk.EnableUpload;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-@EnableUpload
-public class YourApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(YourApplication.class, args);
-    }
-}
-```
-
 ### 2. Configure Cloudflare R2
 
 Add the following properties to your `application.yml` or `application.properties`:
