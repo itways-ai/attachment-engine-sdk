@@ -1,4 +1,4 @@
-package com.itways.assistant.upload_engine_sdk.dto;
+package com.itways.assistant.attachment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

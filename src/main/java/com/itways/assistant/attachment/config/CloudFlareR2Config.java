@@ -1,4 +1,4 @@
-package com.itways.assistant.upload_engine_sdk.config;
+package com.itways.assistant.attachment.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.10</version>
+		<version>3.2.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.itways.assistant</groupId>
-	<artifactId>upload-engine-sdk</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>upload-engine-sdk</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>attachment-engine-sdk</artifactId>
+	<version>0.0.1</version>
+	<name>attachment-engine-sdk</name>
+	<description>attachment engine</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -48,35 +48,5 @@
 			<version>1.12.772</version>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
