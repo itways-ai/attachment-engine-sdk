@@ -20,7 +20,7 @@ public class FileUtils {
 		);
 	}
 
-	private static String safeFileName(String name) {
+	public static String safeFileName(String name) {
 		return name.replaceAll("[^a-zA-Z0-9\\-_]", "_");
 	}
 }

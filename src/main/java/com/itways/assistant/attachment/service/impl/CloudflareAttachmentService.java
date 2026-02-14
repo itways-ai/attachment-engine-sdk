@@ -27,17 +27,18 @@ public class CloudflareAttachmentService implements AttachmentService {
 
 	@Override
 	public <T> UploadResponse upload(String fileName, byte[] bytes) throws Exception {
+		String safeFileName = FileUtils.safeFileName(fileName);
 		// Wrap bytes into MultipartFile
-		MultipartFile file = FileUtils.toMultipartFile(bytes, fileName);
+		MultipartFile file = FileUtils.toMultipartFile(bytes, safeFileName);
 
 		try {
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentLength(file.getSize());
 			metadata.setContentType(file.getContentType());
-			amazonS3.putObject(new PutObjectRequest(config.getBucket(), fileName, file.getInputStream(), metadata));
+			amazonS3.putObject(new PutObjectRequest(config.getBucket(), safeFileName, file.getInputStream(), metadata));
 			// TODO return public URL - Profili site
-			String publicUrl = buildPublicUrl(fileName);
-			return new UploadResponse(fileName, publicUrl, true, "Uploaded successfully");
+			String publicUrl = buildPublicUrl(safeFileName);
+			return new UploadResponse(safeFileName, publicUrl, true, "Uploaded successfully");
 		} catch (Exception e) {
 			throw new Exception("Upload failed: " + e.getMessage());
 
