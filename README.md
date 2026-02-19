@@ -53,12 +53,13 @@ cloudflare:
 
 **application.properties:**
 ```properties
-cloudflare.r2.access-key=your-access-key
-cloudflare.r2.secret-key=your-secret-key
-cloudflare.r2.account-id=your-account-id
-cloudflare.r2.bucket=your-bucket-name
-cloudflare.r2.public-base-url=https://your-public-domain.com
-cloudflare.r2.public-domain=your-public-domain.com
+# Cloudflare R2
+cloudflare.r2.access-key=${CLOUDFLARE_R2_ACCESS_KEY:64a352a6e3befc5811990a2127c1db20}
+cloudflare.r2.secret-key=${CLOUDFLARE_R2_SECRET_KEY:78a8c57fbbdf2fd0f0780d61ff60bcc2b6a6ae89d9b008f1b2bf27329dc47c5d}
+cloudflare.r2.bucket=${CLOUDFLARE_R2_BUCKET:media-service}
+cloudflare.r2.account-id=${CLOUDFLARE_R2_ACCOUNT_ID:78d23ccb3da0c2429824c8c4a3423f6d}
+cloudflare.r2.public-domain=${CLOUDFLARE_R2_PUBLIC_DOMAIN:https://profily.site}
+cloudflare.r2.public-base-url=${CLOUDFLARE_R2_PUBLIC_URL:https://profily.site}
 ```
 
 > **Note:** Either `public-base-url` or `public-domain` must be configured. The SDK prefers `public-base-url` if both are provided.
