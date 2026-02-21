@@ -67,7 +67,11 @@ public class CloudflareAttachmentService implements AttachmentService {
 			return config.getPublicBaseUrl() + "/" + fileName;
 		}
 		if (config.getPublicDomain() != null && !config.getPublicDomain().isBlank()) {
-			return "https://" + config.getPublicDomain() + "/" + fileName;
+			String domain = config.getPublicDomain();
+			if (domain.startsWith("http://") || domain.startsWith("https://")) {
+				return domain + "/" + fileName;
+			}
+			return "https://" + domain + "/" + fileName;
 		}
 
 		throw new IllegalArgumentException("No publicBaseUrl or publicDomain configured for Cloudflare R2");
