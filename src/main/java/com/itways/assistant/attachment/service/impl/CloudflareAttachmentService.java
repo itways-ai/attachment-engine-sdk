@@ -6,7 +6,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -22,42 +21,50 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CloudflareAttachmentService implements AttachmentService {
 
+	private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
+
 	private final AmazonS3 amazonS3;
 	private final CloudFlareR2Config config;
 
 	@Override
-	public <T> UploadResponse upload(String fileName, byte[] bytes) throws Exception {
+	public UploadResponse upload(String fileName, byte[] bytes) {
+		if (bytes == null || bytes.length == 0) {
+			throw new IllegalArgumentException("File content must not be empty");
+		}
+		if (bytes.length > 50 * 1024 * 1024) { // 50 MB hard limit
+			throw new IllegalArgumentException("File size exceeds the maximum allowed limit of 50MB");
+		}
 		String safeFileName = FileUtils.safeFileName(fileName);
-		// Wrap bytes into MultipartFile
-		MultipartFile file = FileUtils.toMultipartFile(bytes, safeFileName);
+		String contentType = FileUtils.detectContentType(safeFileName);
 
 		try {
 			ObjectMetadata metadata = new ObjectMetadata();
-			metadata.setContentLength(file.getSize());
-			metadata.setContentType(file.getContentType());
-			amazonS3.putObject(new PutObjectRequest(config.getBucket(), safeFileName, file.getInputStream(), metadata));
-			// TODO return public URL - Profili site
+			metadata.setContentLength(bytes.length);
+			metadata.setContentType(contentType);
+			amazonS3.putObject(new PutObjectRequest(
+					config.getBucket(),
+					safeFileName,
+					new java.io.ByteArrayInputStream(bytes),
+					metadata));
 			String publicUrl = buildPublicUrl(safeFileName);
 			return new UploadResponse(safeFileName, publicUrl, true, "Uploaded successfully");
 		} catch (Exception e) {
-			throw new Exception("Upload failed: " + e.getMessage());
-
+			throw new RuntimeException("Upload failed: " + e.getMessage(), e);
 		}
 	}
 
 	@Override
-	public String get(String url) throws Exception {
+	public String get(String url) {
 		try {
-			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
 			if (response.statusCode() != 200) {
 				throw new Exception("Failed to fetch content from storage");
 			}
 			return response.body();
 		} catch (Exception e) {
-			throw new Exception("Error fetching template content: " + e.getMessage());
+			throw new RuntimeException("Error fetching content from storage: " + e.getMessage(), e);
 		}
 	}
 
