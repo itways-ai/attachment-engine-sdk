@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.itways.assistant</groupId>
 	<artifactId>attachment-engine-sdk</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0</version>
 	<name>attachment-engine-sdk</name>
 	<description>attachment engine</description>
 	<url/>
@@ -48,14 +48,6 @@
 			<version>1.12.772</version>
 		</dependency>
 	</dependencies>
-
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/itways-ai/attachment-engine-sdk</url>
-		</repository>
-	</distributionManagement>
 
 	<build>
 		<plugins>
