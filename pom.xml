@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.itways.assistant</groupId>
-	<artifactId>upload-engine-sdk</artifactId>
+	<artifactId>attachment-engine-sdk</artifactId>
 	<version>1.0.0</version>
-	<name>upload-engine-sdk</name>
+	<name>attachment-engine-sdk</name>
 	<description>attachment engine</description>
 	<url/>
 	<licenses>

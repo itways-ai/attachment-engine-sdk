@@ -36,5 +36,5 @@ jobs:
           echo "JitPack will build and serve this version automatically on first request."
           echo "Dependency to use:"
           echo "  <groupId>com.github.itways-ai</groupId>"
-          echo "  <artifactId>upload-engine-sdk</artifactId>"
+          echo "  <artifactId>attachment-engine-sdk</artifactId>"
           echo "  <version>${{ github.ref_name }}</version>"

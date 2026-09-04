@@ -24,7 +24,7 @@ Add the dependency to your `pom.xml`:
 ```xml
 <dependency>
     <groupId>com.itways.assistant</groupId>
-    <artifactId>upload-engine-sdk</artifactId>
+    <artifactId>attachment-engine-sdk</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
@@ -210,7 +210,7 @@ The SDK includes the following key dependencies:
 git clone <repository-url>
 
 # Navigate to the project
-cd upload-engine-sdk
+cd attachment-engine-sdk
 
 # Build with Maven
 ./mvnw clean install
